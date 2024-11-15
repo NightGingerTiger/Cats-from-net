@@ -4,6 +4,11 @@ from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 
+ALLOWED_TAGS = [
+    'sleep', 'jump', 'smile', 'fight', 'black', 'white', 'red', 'siamese',
+    'bengal', 'kitten', 'bossy', 'X-MAS'
+]
+
 
 def load_image(url):
     try:
@@ -19,7 +24,7 @@ def load_image(url):
 
 
 def open_new_window():
-    tag = tag_entry.get()
+    tag = tag_combobox.get()
     url_with_tag = f'https://cataas.com/cat/{tag}' if tag else 'https://cataas.com/cat'
     img = load_image(url_with_tag)
     if img:
@@ -51,14 +56,16 @@ file_menu.add_command(label="Загрузить фото", command=open_new_wind
 file_menu.add_separator()
 file_menu.add_command(label="Выход", command=exit)
 
-tag_entry = Entry()
-tag_entry.pack()
+tag_label = Label(text="Выбери тег")
+tag_label.pack()
+
+tag_combobox = ttk.Combobox(values=ALLOWED_TAGS)
+tag_combobox.pack()
 
 load_button = Button(text="Загрузить по тегу", command=open_new_window)
 load_button.pack()
 
 url = 'https://cataas.com/cat'
 
-open_new_window()
 
 window.mainloop()
